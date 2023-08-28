@@ -1,0 +1,432 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+\title{DC motor}
+\subtitle{Mechatronics, Lecture 4}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Content}
+\begin{itemize}
+\item Working principle
+\item Mechanical model
+\item Electrical model
+\item Electro-mechanical second-order model (ODE, transfer function, state-space)
+\item Electro-mechanical third-order model
+\item Reducer (gearbox)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{DC motor working principle}
+%\framesubtitle{How do we know the state?}
+\begin{flushleft}
+
+The basic idea of DC motor's operation is the use of Lorentz force: we run a current through a wire in magnetic field created by permanent magnets. As the wire forms a loop, this creates a net torque, rotating the wire and the shaft attached to it. Once the wire rotates by a certain angle, the brushes that supply electrical connection switch the direction of the DC current, allowing rotation to continue (instead of reversing)
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{DCmotor1}
+%		\caption{Voltage input}
+		%		\label{fig:y equals x}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{DCmotor2}
+%		\caption{Short circuit}
+		%		\label{fig:three sin x}
+	\end{subfigure}
+		\caption{DC motor scheme. Images from \url{https://youtu.be/j\_F4limaHYI}}
+	%	\label{fig:three graphs}
+\end{figure}
+
+
+
+\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{DC motor mechanical model, 1}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		We can describe the dynamics of the motor shaft:
+		
+		\begin{equation}
+			J \frac{d}{dt} \omega = \tau
+		\end{equation}
+	%
+	where $J$ is moment of inertia, $\omega$ is angular velocity and $\tau$ is torque. If we additionally consider linear viscous friction $F \omega$, we get:
+	
+	\begin{equation}
+		J \frac{d}{dt} \omega + F \omega = \tau
+	\end{equation}
+
+	The torque $\tau$ can be modeled as a linear function of current in the motor winding:
+	 
+	 \begin{equation}
+	 	\tau = C_\tau I
+	 \end{equation}
+	 %
+	 where $C_\tau$ is torque coefficient.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor mechanical model, 2}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Note that as long as the variable is angular velocity of the shaft $ \omega$, the dynamics is a first-order ODE. If we instead consider orientation of the shaft $\varphi$, the result is a second-order ODE.
+		
+		\begin{align}
+			J \frac{d^2}{dt^2} \varphi + F \frac{d}{dt} \varphi &= \tau \\
+			\frac{d}{dt} \varphi &= \omega
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor mechanical model, 3}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		The ODE $J \frac{d}{dt} \omega + F \omega = \tau$ is equivalent to the model of RL circuit. This means that the frequency response (considering torque as input and angular velocity as output) is:
+		
+		\begin{equation}
+			|W(\alpha)| =
+			\frac{1}{\sqrt{J^2\alpha^2 + F^2}}
+		\end{equation}
+	%
+	where $\alpha$ is the input frequency.
+	
+	\begin{itemize}
+		\item As the input frequency goes to infinity, the amplitude gain goes to zero. 
+		\item As the input frequency goes to zero, the amplitude gain goes to $\frac{1}{F}$.
+	\end{itemize}
+	
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{DC motor electrical model}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		DC motor winding is essentially a RL circuit. We can describe the electrodynamics of the motor winding as:
+		
+		\begin{equation}
+			L \frac{d}{dt} I + RI + C_w \omega = u
+		\end{equation}
+		%
+		where $I$ is current in motor winding, $L$ is induction coefficient of the motor winding, $R$ is resistance of the motor winding, $C_w$ is back-EMF coefficient and $u$ is input voltage.
+		
+		\bigskip
+		
+		Note that this model also behaves like a RL circuit.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor electro-mechanical model}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Full electro-mechanical model of a DC motor is given by the next system of ODEs:
+		
+		\begin{equation}
+			\begin{cases}
+				L \dot I + RI + C_w \omega = u \\
+				J \dot \omega + F \omega = C_\tau I
+			\end{cases}
+		\end{equation}
+		
+		Laplace transform of this model is:
+		
+		\begin{equation}
+			\begin{cases}
+				Ls I(s) + RI(s) + C_w \omega(s) = u(s) \\
+				Js \omega(s) + F \omega(s) = C_\tau I(s)
+			\end{cases}
+		\end{equation}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor, transfer functions, 1}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		We can describe transfer functions:
+		%
+		\begin{equation}
+			\begin{bmatrix}
+				Ls+R & C_w \\
+				-C_\tau & Js+F
+			\end{bmatrix}
+			\begin{bmatrix}
+				I(s) \\ \omega(s)
+			\end{bmatrix}
+		=
+			\begin{bmatrix}
+				u(s) \\ 0
+			\end{bmatrix}
+		\end{equation}
+		%
+		\begin{align}
+				\text{det} = (Ls+R)(Js+F)+ C_w C_\tau \\
+				\text{inv} = \frac{1}{\text{det}}
+				\begin{bmatrix}
+					Js+F & -C_w \\
+					C_\tau & Ls+R  
+				\end{bmatrix} 
+%			\\
+%			\begin{bmatrix}
+%				I(s) \\ \omega(s)
+%			\end{bmatrix}
+%		=
+%		\frac{1}{\text{det}}
+%		\begin{bmatrix}
+%			(Js+F) u(s) \\
+%			C_\tau u(s)  
+%		\end{bmatrix}
+		\end{align}
+	
+	Giving us transfer functions:
+	
+	\begin{align}
+		I(s)  = \frac{Js+F}{(Ls+R)(Js+F)+ C_w C_\tau} u(s), \\
+		\omega(s)  = \frac{C_\tau}{(Ls+R)(Js+F)+ C_w C_\tau} u(s)
+	\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor, transfer functions, 2}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		We can open the brackets in the transfer function:
+		%
+		\begin{align}
+			\omega(s)  = \frac{C_\tau}{JL s^2 + (LF+JR)s + FR+C_w C_\tau} u(s)
+		\end{align}
+	
+		\bigskip
+		
+		With that, we can transform the model back to time domain, giving us a second-order ODE:
+		%
+		\begin{align}
+			JL \ddot \omega  + (LF+JR) \dot \omega  + (FR+C_w C_\tau) \omega =
+			C_\tau u 
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor, state-space}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		We can write a state-space model with state variables $I$ and $\omega$:
+		
+		\begin{align}
+			\begin{bmatrix}
+				\dot I \\ \dot\omega
+			\end{bmatrix}
+		=
+			\begin{bmatrix}
+				-R/L & -C_w/L \\
+				C_\tau/J & -F/J
+			\end{bmatrix}
+			\begin{bmatrix}
+				I \\ \omega
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				1/L \\ 0
+			\end{bmatrix}
+				u
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Angle control}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Orientation of the motor is given by the angle $\varphi$, where $\dot \varphi(t) = \omega(t)$, or equivalently $s \varphi(s) = \omega(s)$. The transfer function from input voltage to angle $\varphi$ is:
+		%
+		\begin{align}
+			\varphi(s)  = \frac{C_\tau}{JL s^3 + (LF+JR)s^2 + (FR+C_w C_\tau)s} u(s)
+		\end{align}
+		
+		The state-space model then becomes:
+		%
+		\begin{align}
+			\begin{bmatrix}
+				\dot I \\ \dot\omega \\ \dot \varphi
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				-R/L & -C_w/L & 0 \\
+				C_\tau/J & -F/J & 0 \\
+				0 & 1 & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+				I \\ \omega \\ \varphi
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				1/L \\ 0 \\ 0
+			\end{bmatrix}
+			u
+		\end{align}
+		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Payload}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Let us consider a payload with moment of inertia $J_p$ and torque $\tau_p$. Then electro-mechanical dynamics of the motor is:
+		
+		\begin{equation}
+			\begin{cases}
+				L \dot I + RI + C_w \omega = u \\
+				(J+J_p) \dot \omega + F \omega = C_\tau I + \tau_p
+			\end{cases}
+		\end{equation}
+		
+		For example, if the payload is a pendulum with mass $m$ and length $l$, the dynamics becomes:
+		
+		\begin{equation}
+			\begin{cases}
+				L \dot I + RI + C_w \dot \varphi = u \\
+				(J+ml^2) \ddot \varphi + F \dot \varphi = C_\tau I + mgl\sin(\varphi)
+			\end{cases}
+		\end{equation}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Reducer (gearbox)}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		A reducer is a mechanism for reducing angular velocity of the output shaft of the motor, while increasing the output torque.
+		
+		Let us define angular velocity of the output shaft $\omega_o$ and torque of the output shaft $\tau_o$. An ideal reducer is defined as:
+		
+		\begin{align}
+			\omega_o = \frac{1}{N} \omega \\
+			\tau_o = N \tau
+		\end{align}
+	%
+	where $N > 1$ is the reduction ratio.
+	
+	\bigskip
+	
+	The key idea is that an ideal reducer allows us to model orientation and velocity of the input shaft and the output shaft using the same coordinates.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Moment of inertia with a reducer}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Consider a payload with inertial $J_p$ attached to the output shaft of the reducer, rotating at the angular velocity $\omega_o$. The kinetic energy of the entire system is given by:
+		
+		\begin{align}
+			T &= \frac{1}{2} J \omega^2 + \frac{1}{2} J_p \omega_o^2 = \\
+			   &=\frac{1}{2} J \omega^2 + \frac{1}{2} \frac{1}{N^2} J_p \omega^2 = \\
+			   &= \frac{1}{2} (J + J_p / N^2 )\omega^2
+		\end{align}
+	
+		 Thus, dynamic of the drive becomes:
+		 
+		\begin{equation}
+		\begin{cases}
+			L \dot I + RI + C_w \omega = u \\
+			(J + J_p / N^2) \dot \omega + F \omega = C_\tau I +  \tau_p / N
+		\end{cases}
+		\end{equation}		  
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Read more}
+	% \framesubtitle{Local coordinates}
+	\begin{flushleft}
+		
+		\begin{itemize}
+			\item \bref{https://ctms.engin.umich.edu/CTMS/index.php?example=MotorSpeed\&section=SystemModeling}{University of Michigan. DC Motor Speed: System Modeling}
+			
+			\item \bref{https://web.mit.edu/drela/Public/web/qprop/motor1\_theory.pdf}{First-Order DC Electric Motor Model, Mark Drela, MIT Aero \& Astro}
+			
+			\item \bref{http://www.ece.ualberta.ca/~tchen/ctm/examples/motor/motor.html}{University of Alberta. DC Motor Speed Modeling}
+			
+			
+			
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\myqrframe
+
+\end{document}

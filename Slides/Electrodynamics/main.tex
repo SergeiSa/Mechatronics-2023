@@ -4,7 +4,7 @@
 
 
 \title{Electrodynamics}
-\subtitle{Mechatronics, Lecture 2}
+\subtitle{Mechatronics, Lecture 1}
 \author{by Sergei Savin}
 \centering
 \date{\mydate}
@@ -18,21 +18,337 @@
 
 \begin{frame}{Content}
 \begin{itemize}
-\item ***
+\item Ohm's law
+\item Kirchhoff's laws
+\item RL, RC, RLC circuits
+\item Lorentz force
+\item Electric power
+\item Joule heating
 \end{itemize}
 \end{frame}
 
 
 
-\begin{frame}{Newton - Euler law}
+\begin{frame}{Ohm's law, 1}
 %\framesubtitle{How do we know the state?}
 \begin{flushleft}
+
+Ohm's law can be expressed in the following way:
+
+\begin{equation}
+	V = IR
+\end{equation}
+%
+where $V$ is voltage, $I$ is current and $R$ is resistance. We can think of this law in the following terms:
+
+\bigskip
+
+\emph{The voltage across a conductor is equal to the current flowing through it, times the conductor's resistance.}
 
 
 
 \end{flushleft}
 \end{frame}
 
+
+
+
+
+\begin{frame}{Ohm's law, 2}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Ohm's law is equivalently expressed as:
+		
+		\begin{equation}
+			I = V / R
+		\end{equation}
+		
+		\bigskip
+		
+		\emph{To compute current flowing through a conductor, we divide the voltage across the conductor by its resistance.}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Kirchhoff's current law}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Kirchhoff's current law is:
+		
+		\begin{equation}
+			\sum I_j = 0
+		\end{equation}
+		%
+		where $I_j$ are currents flowing into a node (junction) and flowing out of a node.
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\linewidth]{Kirchhoff_1}
+%			\caption{}
+			\label{fig:kirchhoff1}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Kirchhoff's voltage law}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Kirchhoff's voltage law is:
+		
+		\begin{equation}
+			\sum V_j = 0
+		\end{equation}
+		%
+		where $V_j$ are voltage across elements in a closed loop.
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\linewidth]{Kirchhoff_2}
+			%			\caption{}
+			\label{fig:kirchhoff1}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Kirchhoff's law}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Kirchhoff's laws can be formulated as:
+		
+		\bigskip
+		
+		\begin{itemize}
+			\item \emph{The algebraic sum of currents in a network of conductors meeting at a point is zero.}
+			
+			\item \emph{The directed sum of the potential differences (voltages) around any closed loop is zero.}
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{RL circuit, 1}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		RL circuit (resistor-inductor circuit) in the simplest case contains a power source, a resistor and an inductor.
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\linewidth]{Series-RL}
+			%			\caption{}
+			\label{fig:Series-RL}
+		\end{figure}
+		
+		We can model it as a first order differential equation (ODE):
+		
+		\begin{equation}
+			L \frac{dI}{dt} + IR = V
+		\end{equation}
+	%
+	where $L$ is inductance, $I$ is current in the circuit, $R$ is the resistance of the resistor and $V$ is the voltage of source (input / battery, etc).
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{RL circuit, 2}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Differential equation $L \frac{dI}{dt} + IR = V$ can be viewed as follows:
+		
+		\bigskip
+		
+		\begin{itemize}
+			\item The equation represents Kirchhoff's voltage law written as a differential equation.
+			\item Element $IR$ is the voltage across the resistor; element $L \frac{dI}{dt}$ is the voltage across the inductor.
+			\item Being a differential equation, it acts as a \emph{filter}.
+		\end{itemize}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{RC circuit}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		RC circuit (resistor-capacitor circuit) in the simplest case contains a power source, a resistor and a capacitor.
+		%
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{RC_1}
+		\caption{Voltage input}
+%		\label{fig:y equals x}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{RC_2}
+		\caption{Short circuit}
+%		\label{fig:three sin x}
+	\end{subfigure}
+%	\caption{Three simple graphs}
+%	\label{fig:three graphs}
+\end{figure}
+		%
+		Short circuit model can be described as:
+		%
+		\begin{equation}
+			C \frac{dV}{dt} + \frac{V}{R} = 0
+		\end{equation}
+		%
+		where $C$ is the capacitance, $V$ is the voltage across the capacitor [1]. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{RLC circuit}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		RLC circuit (resistor-inductor-capacitor circuit):
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.4\linewidth]{RLC}
+			%			\caption{}
+			\label{fig:Series-RL}
+		\end{figure}
+		
+		We can model it as:
+		
+		\begin{equation}
+			\textcolor{myred}{L \frac{dI}{dt}} + 
+			\textcolor{mydarkgreen}{IR} + 
+			\textcolor{myblue}{V(0) + \frac{1}{C} \int_0^t I(\tau) d\tau } = V(t)
+		\end{equation}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Lorentz force}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Straight wire with a current flowing through it, when placed in magnetic field, experiences force acting on it:
+		
+		\begin{equation}
+			\bo{f} = I \bo{w} \times \bo{b}
+		\end{equation}
+	%
+		where $\bo{f}$ is the force, $I$ is the current, $\bo{w}$ is a vector whose length equals to the length of the wire and direction is equal to the direction of the current; $\bo{b}$ is the magnetic field.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Electric power}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Electric power is a \emph{the rate of doing work}. In care of resistor, the formula of computing electric power is:
+		
+		\begin{equation}
+			W = R I^2
+		\end{equation}
+		%
+		where $R$ is the resistance of a conductor and $I$ is the current flowing through the conductor.
+		
+		\bigskip
+		
+		Alternatively, it can be computed as:
+		
+		\begin{equation}
+			W = V I
+		\end{equation}
+		%
+		where $V$ is voltage.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Joule heating}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		We can compute the \emph{power of heating} generated by an electrical conductor:
+		
+		\begin{equation}
+			P = R I^2
+		\end{equation}
+		%
+		where $R$ is the resistance of a conductor and $I$ is the current flowing through the conductor.
+		
+		\bigskip
+		
+		Note that the heating appears to be exactly equivalent to a power computed for a resistor. We can think of it as "electrical power of a resistor is completely converted into heat".
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Read more}
+	% \framesubtitle{Local coordinates}
+	\begin{flushleft}
+		
+		\begin{itemize}
+			\item \bref{https://web.stanford.edu/class/archive/engr/engr40m.1178/reader/chapter7.pdf}{Stanford. Chapter 7 Impedance and Bode Plots}
+			
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Notes}
+	% \framesubtitle{Local coordinates}
+	\begin{flushleft}
+		
+			[1] The derivation of this equation can be summed up as "The current through the resistor must be equal in magnitude (but opposite in sign) to the time derivative of the accumulated charge on the capacitor".
+			
+		
+		
+	\end{flushleft}
+\end{frame}
 
 
 

@@ -1,0 +1,318 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+\title{PID Control}
+\subtitle{Mechatronics, Lecture 7}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Content}
+\begin{itemize}
+\item Steady State
+%\item Static State
+%\item Power
+%\item Efficiency
+%\item Static power
+%\item Reducer and power
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{PID Control}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		One of the most standard and widely used control laws is proportional-integral-derivative (PID) control. It is especially suitable for:
+		
+		\begin{itemize}
+			\item SISO control, decentralized control, low-level control loop
+			\item stabilizing control,
+			\item shaping frequency response,
+			\item shaping performance / step response,
+			\item robust control (rejecting constant additive disturbances).
+		\end{itemize}
+		
+		Proportional-derivative (PD) control is quite similar (sans robustness), and is widely used in theoretical research.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor model}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Dynamics of the DC motor can be represented as:
+		%
+		\begin{align}
+			JL \ddot \omega  + (LF+JR) \dot \omega   +( FR+C_w C_\tau)\omega =
+			C_\tau u 
+		\end{align}
+		
+		We can re-write the model in new variables:
+		%
+		\begin{align}
+			\ddot \omega  + a\dot \omega  + c\omega =
+			b u 
+		\end{align}
+		%
+		where $a = \frac{LF+JR}{JL}$, $c = \frac{FR+C_w C_\tau}{JL}$, and $b = \frac{C_\tau}{JL}$.
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{PD Control of a DC motor velocity}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		If we want to control angular velocity with a \emph{PD control}, the control law will take form:
+		
+		\begin{equation}
+			u = - K_p \omega - K_d \dot \omega
+		\end{equation}
+	
+		Substituting the control law into the dynamics equations gives us \emph{closed-loop dynamics}:
+		%
+		\begin{align}
+			\ddot \omega  + a\dot \omega  + c\omega =
+			- b K_p \omega - b K_d \dot \omega 
+		\end{align}
+		
+		Grouping the terms we get:
+		%
+		\begin{align}
+			\ddot \omega  + (a + b K_d)\dot \omega  + (c + b K_p)\omega = 0
+		\end{align}
+		
+		We can manipulate coefficients $K_p$ and $K_d$ to achieve desired behavior of the system.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{PD Control example}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Consider the following dynamical system:
+		
+		\begin{align}
+			\ddot \omega  + 2 \dot \omega  + 5\omega = 0.5 u
+		\end{align}
+		
+		We will attempt to find PD control law that turns it into a system $\ddot \omega  + 5 \dot \omega  + 10\omega = 0$.
+		
+		\bigskip
+		
+		We need to solve the following linear equations:
+		%
+		\begin{align}
+			2 + 0.5 K_d = 5 \\
+			5 + 0.5 K_p = 10
+		\end{align}
+		
+		giving us $K_d = 6$ and $K_p = 10$ and PD control law:
+		%
+		\begin{align}
+			u = - 10 \omega - 6 \dot \omega
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{PD Control with reference signal, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Often we use control to follow a \emph{reference signal} $\omega_r(t)$. Control law in that case takes form:
+		
+		\begin{equation}
+			u = K_p (\omega_r(t) - \omega) + K_d (\dot \omega_r(t) - \dot \omega)
+		\end{equation}
+		
+		Substituting it into dynamics equation $\ddot \omega  + a\dot \omega  + c\omega =
+		b u $ we get:
+		
+		\begin{align}
+			\ddot \omega  + a\dot \omega  + c\omega =
+			b K_p (\omega_r(t) - \omega) + b K_d (\dot \omega_r(t) - \dot \omega)
+			\\
+			\ddot \omega  + (a + b K_d )\dot \omega  + (c + b K_p)\omega =
+			b K_p \omega_r(t) + b K_d \dot \omega_r(t)
+		\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{PD Control with reference signal, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We can transform the last equation into Laplace domain:
+		
+		\begin{align}
+			(s^2  + (a + b K_d ) s  + (c + b K_p))\omega(s) =
+			(b K_p + b K_d s) \omega_r(s)
+		\end{align}
+	
+		We find transfer function from the reference signal to the angular velocity $\omega(s)$:
+		
+		\begin{align}
+			W_r(s) = \frac{b K_d s + b K_p}{s^2  + (a + b K_d ) s  + (c + b K_p)} \\
+			\omega(s) = W_r(s) \omega_r(s)
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{DC motor model with additive disturbance}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Sometimes it is hard to model the motor exactly; In particular, this can be expressed by considering additive disturbance:
+		%
+		\begin{align}
+			JL \ddot \omega  + (LF+JR) \dot \omega   +( FR+C_w C_\tau)\omega =
+			C_\tau u + d
+		\end{align}
+		
+		where $d$ is the additive disturbance. We can re-write the model in new variables:
+		%
+		\begin{align}
+			\ddot \omega  + a\dot \omega  + c\omega =
+			b u + d.
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{PID Control of a DC motor velocity, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		If we want to control angular velocity with a \emph{PID control}, the control law will take form:
+		
+		\begin{equation}
+			u(t) =  - K_d \dot \omega(t) - K_p \omega(t) - K_i \int_0^t \omega(\tau) d\tau
+		\end{equation}
+		
+		Defining $\varphi$ such that $\dot \varphi = \omega$ we get:
+		
+		\begin{equation}
+			u(t) = - K_d \ddot \varphi(t) - K_p \dot \varphi(t) - K_i \varphi(t)
+		\end{equation}
+		
+		Substituting the control law into the dynamics equations gives us \emph{closed-loop dynamics}:
+		%
+		\begin{align}
+			\dddot \varphi  + a\ddot \varphi  + c\dot\varphi =
+			d - bK_d \ddot \varphi - bK_p \dot \varphi - bK_i \varphi
+		\end{align}
+		
+		Grouping the terms we get:
+		%
+		\begin{align}
+			\dddot \varphi  + (a+bK_d)\ddot \varphi  + (c+bK_p)\dot\varphi + bK_i \varphi = d
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{PID Control of a DC motor velocity, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Considering the steady state of the equation $\dddot \varphi  + (a+bK_d)\ddot \varphi  + (c+bK_p)\dot\varphi + bK_i \varphi = d$, we get:
+		%
+		\begin{align}
+			bK_i \varphi = d
+		\end{align}
+	
+		With that, we can find steady-state value of $\varphi = d / (bK_i)$. Notice that it allows steady state solution with $\omega = 0$; the steady state value of $\varphi$ is irrelevant for the angular velocity control. This is the idea behind the integral part of PID control.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{PID Control, Laplace}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		PID control in Laplace domain looks like:
+		
+		\begin{equation}
+			u(s) =  - (K_d s + K_p + \frac{K_i}{s}) \omega(s)
+		\end{equation}
+		
+		With reference signal, PID control leads to the transfer function (from reference to angular velocity):
+		
+		\begin{align}
+			W_r(s) = b\frac{K_d s^2 + K_ps + K_i}{s^3  + (a+bK_d ) s^2  + (c+bK_p)s + bK_i}
+		\end{align}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{PID Control - position}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+	If we want to control orientation of motor shaft, we have to re-write the dynamics in terms of $\varphi$:
+	%
+	\begin{equation}
+		\varphi(s) = \frac{b}{s^3 + a s^2 + cs} u(s)
+	\end{equation}
+		
+	The PID control will take the usual form:
+	%
+	\begin{equation}
+		u(s) =  (K_d s + K_p + \frac{K_i}{s}) (\varphi_r(s) - \varphi(s))
+	\end{equation}
+	%
+	\begin{equation}
+		\varphi(s) = \frac{1}{s^3 + a s^2 + cs} u(s)
+	\end{equation}
+
+	The closed-loop transfer function will be:
+	%
+	\begin{equation}
+		\varphi(s) = b\frac{K_d s^2 + K_ps + K_i}{s^4 + a s^3 + (c+bK_d)s^2 + bK_p s + bK_i} \varphi_r(s)
+	\end{equation}
+	
+		
+	\end{flushleft}
+\end{frame}
+
+
+\myqrframe
+
+\end{document}
