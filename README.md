@@ -4,7 +4,8 @@ This repository contains regularly updated course materials. You can use lecture
 
 # Lecture slides
 
-* Lecture 1 - [Mechanics, Dynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/NewtonEuler)
+* Lecture 1 -
+* Lecture 2 - [Mechanics, Dynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/NewtonEuler)
 
 
 # Lecture videos:
