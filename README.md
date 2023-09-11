@@ -9,6 +9,7 @@ This repository contains regularly updated course materials. You can use lecture
 
 
 # Lecture videos:
+* Lecture 1 - https://youtu.be/5SaKbgjoYJ0
 
 
 # For contributors
