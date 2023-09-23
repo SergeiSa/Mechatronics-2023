@@ -1,15 +1,18 @@
 # How to use
 
-This repository contains regularly updated course materials. You can use lecture slides for self study (they are written as lecture notes). Lecture recordings from this and last year offerings are linked below. The links in the Self-study with Colab section are both for self-study and reviewing the practical sessions. Refer to the book and resourses suggestions at the bottom of the page.
+This repository contains regularly updated course materials. You can use lecture slides for self-study (they are written as lecture notes). Refer to the book and resource suggestions at the bottom of the page.
 
 # Lecture slides
 
-* Lecture 1 -
-* Lecture 2 - [Mechanics, Dynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/NewtonEuler)
+* Lecture 1 - [Electrodynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Electrodynamics)
+* Lecture 2 = [Filters](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Filters)
+* Lecture 3 - [Mechanics, Dynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/NewtonEuler)
+* Lecture 4 - [DC motor](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/DC_motor)
 
 
 # Lecture videos:
 * Lecture 1 - https://youtu.be/5SaKbgjoYJ0
+* Lecture 2 - https://youtu.be/IzKL1JAB714
 
 
 # For contributors
