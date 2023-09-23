@@ -5,7 +5,7 @@ This repository contains regularly updated course materials. You can use lecture
 # Lecture slides
 
 * Lecture 1 - [Electrodynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Electrodynamics)
-* Lecture 2 = [Filters](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Filters)
+* Lecture 2 - [Filters](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Filters)
 * Lecture 3 - [Mechanics, Dynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/NewtonEuler)
 * Lecture 4 - [DC motor](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/DC_motor)
 
@@ -28,8 +28,12 @@ Consider adding \*.pdf to the .git/info/exclude file on your local repo. Here is
 # Book suggestions
 
 
-## Lecture 1. State-Space, ODE
+## Lecture 1. Electrodynamics
+* https://web.stanford.edu/class/archive/engr/engr40m.1178/reader/chapter7.pdf
 
-* Classical Mechanics, Herbert Goldstein
+## Lecture 2. Filters
+* https://web.stanford.edu/class/archive/engr/engr40m.1178/reader/chapter7.pdf
+
+## Lecture 3. Mechanics, Dynamics
 
 
