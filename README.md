@@ -36,4 +36,7 @@ Consider adding \*.pdf to the .git/info/exclude file on your local repo. Here is
 
 ## Lecture 3. Mechanics, Dynamics
 
+## Lecture 6. Second order systems
+* https://web.mit.edu/2.14/www/Handouts/PoleZero.pdf
+
 
