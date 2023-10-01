@@ -1,0 +1,364 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+\title{Gearbox}
+\subtitle{Mechatronics, Lecture 8}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Content}
+\begin{itemize}
+\item Gear systems
+\begin{itemize}
+	\item Cylindrical gears
+	\item Worm gears
+	\item Planetary gears
+	\item Strain wave gears
+\end{itemize}
+\item Dry friction
+\item Stiction
+\item Backlash
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Gear systems}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Motors often require a gear system (gearing, gearbox, transmission, reducers) to lower the output shaft speed and increase the output torque.
+		
+		\bigskip
+		
+		
+		There is a great variety of possible gear systems, however, a few are especially popular. They differ from each other in terms of \emph{reduction ratio}, \emph{backdrivability}, mechanical complexity and other characteristics.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Cylindrical gears}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{cylindrical}
+			\caption{Cylindrical gears}
+			\label{fig:cylindrical}
+		\end{figure}
+		
+		Cylindrical gears usually have low or medium reduction ratio. When reduction ratio is low, they are backdrivable. 
+		
+	\end{flushleft}
+\end{frame}
+
+\begin{frame}{Worm gears}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{worm}
+	\caption{Worm gear}
+	\label{fig:worm}
+\end{figure}
+
+		
+		Worm gears usually have medium or high reduction ratio. Not backdrivable.
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Planetary gears}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{Planetary}
+			\caption{Planetary gear.  \bref{https://www.linearmotiontips.com/why-are-planetary-gearboxes-preferred-for-servo-applications/}{Image credit.} }
+			\label{fig:worm}
+		\end{figure}
+		
+		Planetary gears usually have medium or high reduction ratio. Usually are not backdrivable.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Strain wave gears}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\linewidth]{strain_wave}
+			\caption{Strain wave gear. }
+			\label{fig:worm}
+		\end{figure}
+		
+		Strain wave gears usually have high reduction ratio. Not backdrivable.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Non-linearity in gear systems}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		There are typical sources of non-linearity in gear systems: 
+		
+		\begin{itemize}
+			\item Dry friction, causing "dead zone" effect - zero output shaft angular velocity with non-zero input voltage.
+			
+			\item Backlash, causing, e.g. non-zero output shaft angular velocity with zero input voltage.
+		\end{itemize}  
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Dry friction, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Dry friction can be described like this:
+		
+		\begin{itemize}
+			\item When there is no motion, dry friction prevents the motion from starting as long as the force needed to accomplish it is less than maximum friction force.
+			
+			\item When there is motion, dry friction force is equal it its maximum value.
+		\end{itemize}  
+		
+		This is one of many possible dry friction models.		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Dry friction, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Let $\omega$ describe angular velocity of the output shaft, and $\tau_{f, \text{max}}$ be the maximum value of the dry friction torque. Assuming that $\omega 
+		\geq 0$ the dry friction model can be described:
+		
+		\begin{equation}
+			\begin{cases}
+				J \frac{d \omega}{dt} + F \omega = C_\tau I - \tau_f,  \\
+				(\tau_f -  \tau_{f, \text{max}}) \omega = 0, \\
+				\tau_f \leq \tau_{f, \text{max}}
+			\end{cases}
+		\end{equation}
+		
+		The constraint $(\tau_f -  \tau_{f, \text{max}}) \omega = 0$ is a complementarity constraint. For it to hold, either $\tau_f = \tau_{f, \text{max}}$ should hold, or the velocity should be zero $\omega = 0$.
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Dry friction, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We have two basic scenarios:
+		
+		\begin{enumerate}
+			\item $\omega = 0$ and $\tau_f \leq \tau_{f, \text{max}}$, giving us $C_\tau I - \tau_f = 0$.
+			
+			\item $\omega \neq 0$ and $\tau_f = \tau_{f, \text{max}}$, giving us $J \frac{d \omega}{dt} + F \omega = C_\tau I - \tau_{f, \text{max}}$.
+		\end{enumerate}
+		
+		For the switch from the first scenario to the second one to occur, the friction force has to reach $\tau_{f, \text{max}}$, allowing positive acceleration.
+		
+		\bigskip
+		
+		For the switch from the second scenario to the first one to occur, velocity has to reach zero and the friction force should be less than or equal to the maximum value.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Dry friction, 4}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		During the first scenario, $C_\tau I = \tau_f$. For the motion to start (the transition to the second scenario to occur) $\tau_f$ should reach the value $\tau_{f, \text{max}}$, meaning we could find the value of the current during the transition $I_{tr}$:
+		
+		\begin{equation}
+			C_\tau I_{tr} = \tau_{f, \text{max}}
+		\end{equation}
+		
+		This implies $I_{tr} = \frac{\tau_{f, \text{max}}}{C_\tau}$.  Let us consider a steady-state solution of the electrical equation that leads to the output of such current:
+		%
+		\begin{align}
+			R I_{tr} = u_{tr}
+		\end{align}
+		
+		where $u_{tr} = \frac{R}{C_\tau} \tau_{f, \text{max}}$ is a transition voltage.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Dry friction - stiction, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Stiction model of dry friction can be described like this:
+		
+		\begin{itemize}
+			\item When there is no motion, dry friction prevents the motion from starting as long as the force needed to accomplish it is less than maximum friction force.
+			
+			\item When there is motion, dry friction force is \textbf{less} it its maximum value.
+		\end{itemize}  
+		
+		This is will lead to various effects, including auto-induced oscillations.
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Dry friction - stiction, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Assuming that $\omega 
+		\geq 0$ the stiction dry friction model can be described:
+		
+		\begin{equation}
+			\begin{cases}
+				J \frac{d \omega}{dt} + F \omega = C_\tau I - \tau_f,  \\
+				(\tau_f -  \tau_{f, \text{max}}) \omega = 0, \\
+				\tau_f \leq \eta \tau_{f, \text{max}}
+			\end{cases}
+		\end{equation}
+		
+		where $\eta < 1$.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Dry friction - stiction, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		As before, transition voltage is $u_{tr} = \frac{R}{C_\tau} \tau_{f, \text{max}}$. After transition is over (motion has started), the dynamics is described by the following equation:
+		%
+		\begin{equation}
+			\begin{cases}
+				L \dot I + RI + C_w \omega = u,
+				\\
+				J \dot   \omega + F \omega = C_\tau I - \eta \tau_{f, \text{max}}. 
+			\end{cases}
+		\end{equation}
+		
+		We can compute a steady-state solution for $u_{tr}$:
+		%
+		\begin{equation}
+			\begin{cases}
+				RI + C_w \omega = \frac{R}{C_\tau} \tau_{f, \text{max}},
+				\\
+				F \omega = C_\tau I - \eta \tau_{f, \text{max}}. 
+			\end{cases}
+		\end{equation}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Dry friction - stiction, 4}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We re-write it in matrix form and solve it: 
+		
+		\begin{equation}
+			\begin{bmatrix}
+				R & C_w \\
+				-C_\tau & F
+			\end{bmatrix}
+		\begin{bmatrix}
+			I \\
+			\omega
+		\end{bmatrix}
+			=
+		\begin{bmatrix}
+			\frac{R}{C_\tau} \tau_{f, \text{max}} \\
+			-\eta \tau_{f, \text{max}}
+		\end{bmatrix}
+		\end{equation}
+	
+	\begin{equation}
+		\begin{cases}
+			I = \frac{\tau_{f, \text{max}}}{FR+C_\tau C_w} \frac{FR+C_\tau C_w\eta}{C_\tau},
+			\\
+			\omega = \frac{\tau_{f, \text{max}}}{FR+C_\tau C_w}  R(1 - \eta)
+		\end{cases}
+	\end{equation}
+		
+		We can notice that the angular velocity is non-zero, and is proportional to the stiction gap $1 - \eta$.
+		
+		\bigskip
+		
+		So, we can observe stiction leads to a discontinuity in steady-state solutions. From zero steady-state velocity we jump instantaneously to $\omega = \frac{\tau_{f, \text{max}}}{FR+C_\tau C_w}  R(1 - \eta)$ as $u$ approaches transition values.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Backlash}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		\emph{Backlash} is an effect of independent motion of the inner shaft (orientation defined by angle $\theta$) and the output shaft (orientation defined by angle $\varphi$). The relation between these two angles is defined by the equation:
+		
+		\begin{equation}
+			|\varphi - N \theta| \leq \Delta
+		\end{equation}
+	%
+	where $\Delta$ is the maximum value of the discrepancy between the two orientations and $N$ is the gear ratio.
+	
+	\bigskip
+	
+	With that, the dynamics of the inner shaft is determined by the motor's Euler equation, and the  dynamics of the output shaft - by its own, separate equation. The connection between the two is established by reaction forces acting within the gear system.
+	
+	\end{flushleft}
+\end{frame}
+
+\myqrframe
+
+\end{document}

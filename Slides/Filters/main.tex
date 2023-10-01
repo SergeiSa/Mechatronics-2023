@@ -480,7 +480,7 @@
 		
 		\begin{align}
 			W_I(\omega) = \frac{1}{L\omega j + R} =
-			 \frac{L\omega j - R}{L^2\omega^2 + R^2}; \\
+			 \frac{-L\omega j + R}{L^2\omega^2 + R^2}; \\
 			|W_I(\omega)| = \frac{\sqrt{L^2\omega^2 + R^2}}{L^2\omega^2 + R^2} =
 			\frac{1}{\sqrt{L^2\omega^2 + R^2}}
 		\end{align}
@@ -504,7 +504,7 @@
 		
 		\begin{align*}
 			W_L(\omega) = \frac{L\omega j}{L\omega j + R} =
-			\frac{-L^2\omega^2 - RL\omega j}{L^2\omega^2 + R^2}; \\
+			\frac{L^2\omega^2 + RL\omega j}{L^2\omega^2 + R^2}; \\
 			|W_L(\omega)| = \frac{\sqrt{L^4\omega^4 + R^2L^2\omega^2}}{L^2\omega^2 + R^2} =
 			L\omega\frac{\sqrt{L^2\omega^2 + R^2}}{L^2\omega^2 + R^2} =
 			\frac{L\omega}{\sqrt{L^2\omega^2 + R^2}}
@@ -555,7 +555,7 @@
 		We can define electric charge of a capacitor as $q$, relating to the current as:
 		
 		\begin{equation}
-			q(t) = \int_0^{t} I(\tau) d\tau
+			q(t) = q(0) + \int_0^{t} I(\tau) d\tau
 		\end{equation}
 		
 		This means that $\frac{dq(t)}{dt} = I(t)$.
@@ -584,16 +584,16 @@
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		Note that $\frac{dq(t)}{dt} = I(t)$ in Laplace domain is $s q(s) = I(s)$. IN other words:
+		Expression $\frac{dq(t)}{dt} = I(t)$ in Laplace domain becomes $s q(s) = I(s)$. Dividing by $s$ we get:
 		
 		\begin{equation}
 			q(s) = \frac{1}{s} I(s)
 		\end{equation}
 		
-		That means the time domain equation $\frac{q(t)}{C} + I(t)R = V(t)$ becomes:
+		Note that $1/s$ is a representation of an \emph{integrator} in Laplace domain. So, the time domain equation $\frac{q(t)}{C} + I(t)R = V(t)$ becomes:
 		
 		\begin{equation}
-			\frac{1}{Cs}I(s) + I(s)R = V(s)
+			\frac{1}{sC}I(s) + I(s)R = V(s)
 		\end{equation}
 		
 		Giving us a transfer function:
@@ -623,7 +623,7 @@
 			W_R(s) = \frac{sCR}{1 + sCR}
 		\end{equation}
 	
-		The transfer function from input voltage $V(s)$ to voltage across the capacitor $V_C(s) = \frac{1}{Cs}I(s)$ is:
+		The transfer function from input voltage $V(s)$ to voltage across the capacitor $V_C(s) = \frac{1}{sC}I(s)$ is:
 	
 		\begin{equation}
 		W_C(s) = \frac{1}{1 + sCR}
@@ -694,10 +694,11 @@
 			L \frac{d}{dt}I(t) + \frac{q(t)}{C} + I(t)R = V(t)
 		\end{equation}
 	
-		To find Laplace transform of this equation we remember that $V_C(s) = \frac{1}{sC} I(s)$ and $V_L(s) = sLI(s)$:
+		In Laplace domain these equalities are $V_C(s) = \frac{1}{sC} I(s)$ and $V_L(s) = sLI(s)$:
 		
 		\begin{align}
 			 sLI(s) + RI(s) + \frac{1}{sC} I(s) = V(s) \\
+			 \frac{s^2LC}{sC}I(s) + \frac{sCR}{sC}I(s) + \frac{1}{sC} I(s) = V(s) \\
 			 I(s) = \frac{sC}{s^2 LC + s RC + 1} V(s)
 		\end{align}
 		
@@ -714,11 +715,11 @@
 		Alternative ways to describe RLC circuit dynamics is:
 		
 		\begin{equation}
-			L \frac{d}{dt}I(t) + I(t)R + \int_0^{t} I(\tau) d\tau = V(t)
+			L \frac{d}{dt}I(t) + I(t)R + \frac{1}{C} \int_0^{t} I(\tau) d\tau = V(t)
 		\end{equation}
 		
 		\begin{equation}
-			\left(s^2 + \frac{R}{L}s + \frac{1}{LC} \right)I(s) = s^2V(s)
+			\left(s^2 + \frac{R}{L}s + \frac{1}{LC} \right)I(s) = sV(s)
 		\end{equation}
 		
 		The voltage across the conductor is $V_C(s) = \frac{1}{sC} I(s)$:
@@ -732,11 +733,9 @@
 		\begin{align}
 			V_L(s) = \frac{s^2 LC}{s^2 LC + s RC + 1} V(s)
 		\end{align}
-		
-		
+				
 	\end{flushleft}
 \end{frame}
-
 
 
 
