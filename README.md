@@ -8,6 +8,11 @@ This repository contains regularly updated course materials. You can use lecture
 * Lecture 2 - [Filters](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Filters)
 * Lecture 3 - [Mechanics, Dynamics](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/NewtonEuler)
 * Lecture 4 - [DC motor](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/DC_motor)
+* Lecture 5 - [DC motor - properties](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/DC_motor_properties)
+* Lecture 6 - [Second-order systems](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Second_order_systems)
+* Lecture 7 - [PID control](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/PID_control)
+* Lecture 8 - [Gearbox](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Gearbox)
+
 
 
 # Lecture videos:
@@ -15,6 +20,10 @@ This repository contains regularly updated course materials. You can use lecture
 * Lecture 2 (part 1) - https://youtu.be/IzKL1JAB714
 * Lecture 2 (part 2) - https://youtu.be/W0T9cL4Hllc
 * Lecture 3 - https://youtu.be/XO22REeav0A
+* Lecture 4 (part 1) - https://youtu.be/s_4yU-LvRCE
+* Lecture 4 (part 2) - https://youtu.be/_G6rb-1mylA
+* Lecture 5 - https://youtu.be/Fca-hdgpVXg
+* Lecture 6 - https://youtu.be/_3JpLo8uixY
 
 
 # For contributors
