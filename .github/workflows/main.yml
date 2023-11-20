@@ -19,23 +19,23 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Compile LaTeX document NewtonEuler
-        uses: xu-cheng/latex-action@master
-        with:
-          root_file: main.tex
-          working_directory: Slides/NewtonEuler/
-
       - name: Compile LaTeX document Electrodynamics
         uses: xu-cheng/latex-action@master
         with:
           root_file: main.tex
           working_directory: Slides/Electrodynamics/
 
-      - name: Compile LaTeX document Second_order_systems
+      - name: Compile LaTeX document Filters
         uses: xu-cheng/latex-action@master
         with:
           root_file: main.tex
-          working_directory: Slides/Second_order_systems/
+          working_directory: Slides/Filters/
+
+      - name: Compile LaTeX document NewtonEuler
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/NewtonEuler/
 
       - name: Compile LaTeX document DC_motor
         uses: xu-cheng/latex-action@master
@@ -49,27 +49,26 @@ jobs:
           root_file: main.tex
           working_directory: Slides/DC_motor_properties/
 
-      - name: Compile LaTeX document Filters
+      - name: Compile LaTeX document Second_order_systems
         uses: xu-cheng/latex-action@master
         with:
           root_file: main.tex
-          working_directory: Slides/Filters/
+          working_directory: Slides/Second_order_systems/
 
       - name: Compile LaTeX document PID_control
         uses: xu-cheng/latex-action@master
         with:
-          root_file: main.tex
-          working_directory: Slides/PID_control/
+          root_file: main.
 
-
-
-
-
-      - name: Save NewtonEuler artifact
-        uses: actions/upload-artifact@v1
+      - name: Compile LaTeX document Gearbox
+        uses: xu-cheng/latex-action@master
         with:
-          name: NewtonEuler.pdf
-          path: Slides/NewtonEuler/main.pdf
+          root_file: main.tex
+          working_directory: Slides/Gearbox/
+
+
+
+
 
       - name: Save Electrodynamics artifact
         uses: actions/upload-artifact@v1
@@ -77,11 +76,17 @@ jobs:
           name: Electrodynamics.pdf
           path: Slides/Electrodynamics/main.pdf
 
-      - name: Save Second_order_systems artifact
+      - name: Save Filters artifact
         uses: actions/upload-artifact@v1
         with:
-          name: Second_order_systems.pdf
-          path: Slides/Second_order_systems/main.pdf
+          name: Filters.pdf
+          path: Slides/Filters/main.pdf
+
+      - name: Save NewtonEuler artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: NewtonEuler.pdf
+          path: Slides/NewtonEuler/main.pdf
 
       - name: Save DC_motor artifact
         uses: actions/upload-artifact@v1
@@ -95,17 +100,23 @@ jobs:
           name: DC_motor_properties.pdf
           path: Slides/DC_motor_properties/main.pdf
 
-      - name: Save Filters artifact
+      - name: Save Second_order_systems artifact
         uses: actions/upload-artifact@v1
         with:
-          name: Filters.pdf
-          path: Slides/Filters/main.pdf
+          name: Second_order_systems.pdf
+          path: Slides/Second_order_systems/main.pdf
 
       - name: Save PID_control artifact
         uses: actions/upload-artifact@v1
         with:
           name: PID_control.pdf
           path: Slides/PID_control/main.pdf
+
+      - name: Save Gearbox artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: Gearbox.pdf
+          path: Slides/Gearbox/main.pdf
 
 
 
@@ -117,13 +128,14 @@ jobs:
         run: |
           git config --global user.name 'CI PDF compiler'
           git config --global user.email '<>'
-          git add Slides/NewtonEuler/main.pdf
           git add Slides/Electrodynamics/main.pdf
-          git add Slides/Second_order_systems/main.pdf
+          git add Slides/Filters/main.pdf
+          git add Slides/NewtonEuler/main.pdf
           git add Slides/DC_motor/main.pdf
           git add Slides/DC_motor_properties/main.pdf
-          git add Slides/Filters/main.pdf
+          git add Slides/Second_order_systems/main.pdf
           git add Slides/PID_control/main.pdf
+          git add Slides/Gearbox/main.pdf
 
           git commit -m "Update compiled PDFs"
           git push

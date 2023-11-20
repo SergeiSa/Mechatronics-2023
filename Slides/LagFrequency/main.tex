@@ -1,0 +1,384 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+\title{Control frequency, Time lag}
+\subtitle{Mechatronics, Lecture 10}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Content}
+\begin{itemize}
+	\item Quantization
+	\item Discretization
+	\item Update rate
+	\item Time lag
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Digital systems}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Digital systems are characterized, among other things, by:
+		
+		\begin{itemize}
+			\item quantization;
+			\item discretization;
+			\item update frequency;
+			\item time lag.
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Quantization, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Digital systems encode values using rational numbers, specifically - decimal fractions with a finite number of digits. This implies a minimum possible difference between non-equal numbers $\Delta x$.
+		
+		\bigskip
+		
+		For example, if we use 8 bits to encode voltage values from 0 to 12 Volts, then a minimal difference between non-equal voltages is $0.047$ V. We can call this number ($0.047$ V) \emph{resolution} of this encoding.
+		
+		\bigskip
+		
+		\emph{Quantization} is a process of encoding a sequence of numbers given range of values and resolution.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Quantization, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Mathematically, quantization is defined as:
+		
+		\begin{equation}
+			\text{quant}(x) = \delta \cdot \text{trunc}\left(  \frac{x}{\delta} \right)
+		\end{equation}
+		
+		where $\text{trunc}(\cdot)$ is a truncation to the whole number, $\delta = \frac{1}{n}$ is a resolution, and $n$ is the number of unique values $\text{quant}(x)$ can have. 
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Quantization, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		
+		For binary encodings $n = 2^{\text{bit}}$; e.g. 8 bit gives us $n=256$ and 16 bit gives us $n= 65536$. Keep in mind that "number of bits used to encode a number" isn't the same as amount of memory allocated to store a variable. 
+		
+		\bigskip
+		
+		Number of bits available to encode a value usually provides a good description of a sensor; also sensors usually have comparatively low resolution. On the other hand, variables stored in microprocessor memory are better described by their type: "int", "float", "double" etc. These usually have very high resolution, and less notable quantization effects. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Quantization - examples}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Quantization potentially affects the following values in mechatronic system:
+		
+		\begin{itemize}
+			\item Desired output voltage of a controller, generated with pulse-width modulation (PWM). Resolution is limited by PWM frequency.
+			
+			\item Sensor readings. Resolution is limited by digital sensor resolution.
+			
+			\item State estimates. Resolution is limited by variable resolution used by the microcontroller.
+		\end{itemize}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Quantization - effects}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We do not have specific tools widely used to deal with quantization problems. 
+		
+		\bigskip
+		
+		However, usually the effects of quantization are small enough to ignore on the level of a single mechatronic module (given a sensor with high-enough resolution, which is typical).  
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Discretization, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		\emph{Continuous-time} (CT) signal $f(t)$ is defined for any time $t$. \emph{Discrete-time} (DT) signal is defined only on a sequence of discrete moments of time $t_1, \ t_2, \ ...$ Often these moments of times are equally spaced, and are characterized by time step $\Delta t$.
+		
+		\bigskip
+		
+		\emph{Discretization} of a CT signal $f(t)$ is a process of producing a discrete sequence which is in some sense equivalent to the original CT signal. For example, it can be done by evaluating the CT signal on a sequence of time moments $t_1, \ t_2, \ ...,$ producing discrete sequence $f(t_1), \ f(t_2),  \ ...$.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Discretization, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		An "inverse" operation to discretization is  \emph{interpolation}. It provides a CT signal $g(t)$, in some sense equivalent to the given DT sequence $f_1, \ f_2, \ ...$; There are many ways to do it:
+		
+		\bigskip
+		
+		\begin{itemize}
+			\item Zero-order hold: given $t_i \leq t < t_{i+1}$ we assume $g(t) = f_i$.
+			
+			\item Linear model: we assume that $g(t)$ changes from $f_i$ to $f_{i+1}$ linearly on the time interval $t_i \leq t < t_{i+1}$.
+			%: given $t_i \leq t < t_{i+1}$ we assume $g(t) = \frac{t - t_i}{t_{i+1} - t_i} f_{i+1} + \frac{t_{i+1} - t}{t_{i+1} - t_i} f_i$.
+			
+			\item Polynomial model;
+			
+			\item other.
+			
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Discretization, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We have plenty of control tools designed specifically for DT systems: there are discrete-time stability criterion on eigenvalues (allowing to use pole placement for control design), discrete-time LQR, discrete-time Kalman filter, etc.
+		
+		\bigskip
+		
+		By itself, discretization does not pose significant problems. 
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Update rate, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		
+		We can compute how often a discrete signal changes per unit of time. Assume that a DT signal is defined over time sequence $0, \ \Delta t, \ 2\Delta t, \ 3\Delta t, \ ...$; then we can define update rate of this signal:
+		
+		\begin{equation}
+			\eta = \frac{1}{\Delta t}
+		\end{equation}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Update rate, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		It is clear that update rate depends on $\Delta t$. For digital systems with a single processor, both values depend on how much time it takes the processor to finish computations and transmit the data.
+		
+		\bigskip
+		
+		It is a common assumption that higher update rates improve the performance of the control system. This motivates breaking control system into subsystems with higher update rates of lower level subsystems. 
+		
+		\bigskip
+		
+		For example, it is common to design current control for motors. This allows high update rates, possible due to the use of local processing (as opposed to centralized computations done by the robot's main computer, these types of loops are often processed entirely by the built-in electronics of the motor).
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Time lag}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		\emph{Time lag} is an effect related to the time it takes both process and transmit a signal. It means that there is a time difference between the moment of time the information is acquired and the moment of time the information is available.
+		
+		\bigskip
+		
+		 Assume that control signal $u$ is a function of the sensor readings $y(t)$: $u = h(y)$. Without time lag, the function can be written as:
+		 
+		 \begin{equation}
+		 	u(t) = h(y(t))
+		 \end{equation}
+		
+			With time lag $\tau$, it becomes:
+			
+			\begin{equation}
+				u(t) = h(y(t-\tau))
+			\end{equation}
+			
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Time lag - CT example}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Consider a simple example: a linear system $\dot x = A x + Bu$, where full state of the system is being measured $y = x$ and control law is linear $u = -Kx$. Then in the absence of time lag the closed-loop system becomes:
+		
+		\begin{equation}
+			\dot x = (A - BK )x
+		\end{equation}
+		%
+		which is stable if $A - BK$ is Hurwitz.
+		
+		\bigskip
+		
+		Assume that time lag affects the control law $u(t) = -Kx(t - \tau)$. Then the closed-loop system becomes:
+		
+		\begin{equation}
+			\dot x(t) = A x(t) - B K x(t - \tau)
+		\end{equation}
+		
+		For this system we do not have a simple stability criterion. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Time lag - DT example, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Let consider a discrete system $x_{i+1} = A x_i + Bu_i$ with discretization step $\Delta t$. As before we assume that we measure the full state. Then, the control law and closed loop system can be:
+		%
+		\begin{align}
+			u_i = -K x_i \\
+			x_{i+1} = (A - BK) x_i
+		\end{align}
+		%
+		which is stable if $A - BK$ is Schur.
+		
+		\bigskip
+		
+		Assume that time lag is equal to desensitization step: $\tau = \Delta t$. Then the control law and the closed loop system become:
+		%
+		\begin{align}
+			u_i = -K x_{i-1} \\
+			x_{i+1} =A x_i - BKx_{i-1}
+		\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Time lag - DT example, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We can analyze the stability of the closed-loop system $x_{i+1} =A x_i - BKx_{i-1}$:
+		
+		\begin{align}
+			\begin{bmatrix}
+				x_{i+1} \\ x_i
+			\end{bmatrix} = 
+			\begin{bmatrix}
+				A & -BK \\
+				I & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+				x_i \\ x_{i-1}
+			\end{bmatrix}
+		\end{align}
+		%
+		where the matrix needs to be Schur.
+		
+		\bigskip
+		
+		As we can see, the time lag effectively increased the conditionality of the state of the system.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Time lag - DT example, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		If the time lag is equal to 3 desensitization steps: $\tau = 3 \Delta t$, the closed-loop system is $x_{i+1} =A x_i - BKx_{i-3}$, which can be re-written as:
+		
+		\begin{align}
+			\begin{bmatrix}
+				x_{i+1} \\ x_i \\ x_{i-1} \\ x_{i-2}
+			\end{bmatrix} = 
+			\begin{bmatrix}
+				A & 0& 0& -BK \\
+				I & 0 & 0 & 0\\
+				0 & I & 0 & 0\\
+				0 & 0 & I & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+				 x_i \\ x_{i-1} \\ x_{i-2} \\ x_{i-3}
+			\end{bmatrix}
+		\end{align}
+		
+		We can see that the size of dimensions of the state grows together with the time lag.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Time lag - effects}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Time lag can have a noticeable negative effect on the performance of the control system. It i soften associated with communication time - the length of time it takes to transmit information through communication interfaces.
+		
+		\bigskip
+		
+		A well-designed motor can minimize lag, by avoiding slow communication protocols, limiting the volume of transmitted data, etc. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+\myqrframe
+
+\end{document}

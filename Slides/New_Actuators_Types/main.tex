@@ -1,0 +1,221 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+\title{New Actuators Types}
+\subtitle{Mechatronics, Lecture 12}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Content}
+\begin{itemize}
+	\item Variable Stiffness Actuators
+	\item Twisted Spring Actuators
+	\item Tensegrity structures
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+	\centerline{Variable Stiffness Actuators}
+\end{frame}
+
+\begin{frame}{Variable Stiffness Actuator}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=1.0\linewidth]{VSA_1}
+			\caption{Wolf, Sebastian, et al. "Variable stiffness actuators: Review on design and components." IEEE/ASME transactions on mechatronics 21.5 (2015): 2418-2430.}
+			\label{fig:vsa1}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Variable Stiffness Actuator - model, 1}
+	\begin{flushleft}
+		
+		Different types of Variable Stiffness Actuators (VSA) have different models. Qbmove actuator is described by the following one:
+		
+	\begin{equation}
+		\begin{cases}
+			L_1 \dot I_1 + R_1 I_1 + C_{w,1} \dot \theta_1 = u_1 
+			\\
+			L_2 \dot I_2 + R_2 I_2 + C_{w,2} \dot \theta_2 = u_2
+			 \\
+			J_1 \ddot \theta_1 + \mu_1 \dot \theta_1 = C_{\tau, 1} I_1 - \tau_1
+			 \\
+			J_2 \ddot \theta_2 + \mu_2 \dot \theta_2 = C_{\tau, 2} I_2 - \tau_2 
+			\\
+			J \ddot \varphi + \mu \dot \varphi = \tau_1 + \tau_2
+		\end{cases}
+	\end{equation}
+%
+where $\theta_1$, $\theta_2$  - orientation of the internal motor shaft, and $\varphi$ - orientation of the output shaft, $\tau_1$, $\tau_2$ - torque produced by elastic elements, $J$, $J_1$, $J_2$ - moment of inertia, $\mu$, $\mu_1$, $\mu_2$ - viscous friction coefficient, 
+$L$, $R$, $C_w$, $C_\tau$, $I$, $u$ are inductance, resistance, back-EMF and torque coefficients, current and input voltage.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Variable Stiffness Actuator - model, 2}
+	\begin{flushleft}
+		
+		The torque produced by elastic elements for Qbmove is given as:
+		
+		\begin{align}
+			\tau_1 = \sigma \sinh (a_1 (\theta_1 - \varphi)) 
+			\\
+			\tau_2 = \sigma \sinh (a_2 (\theta_2 - \varphi)) 
+		\end{align}
+		%
+		where $a_1$ and $\sigma$ are model constants.
+		
+		\bigskip
+		
+		The non-linearity of this model allows us to control the stiffness of the VSA.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Variable Stiffness Actuator - model, 3}
+	\begin{flushleft}
+		
+		Stiffness $\mathcal{K}$ of an actuator can be defined as a partial derivative of the output torque with respect to the output shaft orientation:
+		
+		\begin{equation}
+			\mathcal{K} = \frac{\partial (\tau_1 + \tau_2)}{\partial \varphi}
+		\end{equation}
+		
+		Note that if the torque was linear or affine with respect to $\varphi$, then stiffness of such actuator could not be influenced by internal variables $\theta_i$ or the orientation of the output shaft $\varphi$.
+		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}
+	\centerline{Twisted Spring Actuators}
+\end{frame}
+
+
+\begin{frame}{Twisted Spring Actuator, 1}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{TSA}
+%			\caption{}
+			\label{fig:tsa}
+		\end{figure}
+		
+%		Bombara, D., Fowzer, S. and Zhang, J., 2022. Compliant, large-strain, and self-sensing twisted string actuators. Soft Robotics, 9(1), pp.72-88.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Twisted Spring Actuator, 2}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=1\linewidth]{TSA_2}
+			\caption{Inoue, T., Miyata, R. and Hirai, S., 2016, October. Force control on antagonistic twist-drive actuator robot. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3830-3835). IEEE.}
+			\label{fig:tsa2}
+		\end{figure}
+		
+		
+		%		Inoue, T., Miyata, R. and Hirai, S., 2016, October. Force control on antagonistic twist-drive actuator robot. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3830-3835). IEEE.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}
+	\centerline{Tensegrity structures}
+\end{frame}
+
+
+
+\begin{frame}{Tensegrity structures}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{tensegrity_1}
+			\label{fig:tensegrity1}
+		\end{figure}
+		
+		Note that cables are usually elastic and pre-stressed.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Tensegrity forses}
+	\begin{flushleft}
+		
+		Elastic force acting between nodes $\bo{r}_i$ and $\bo{r}_j$ can be modelled as follows:
+		
+		\begin{equation}
+			\label{eq:elastice_force_vanilla}
+			\bo{f}_{ij} = \mu_{ij} (||\bo{r}_i - \bo{r}_j|| - \rho_{ij}) \frac{\bo{r}_i - \bo{r}_j}{||\bo{r}_i - \bo{r}_j||}
+		\end{equation}
+		%
+		where $\mu_{ij}$ - cable stiffness, $ \rho_{ij}$ - undeformed cable length
+	
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Tensegrity robot}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{tensegrity_2}
+			\caption{		Rieffel, J. and Mouret, J.B., 2018. Adaptive and resilient soft tensegrity robots. Soft robotics, 5(3), pp.318-329.}
+			\label{fig:tensegrity1}
+		\end{figure}
+		
+
+	\end{flushleft}
+\end{frame}
+
+\myqrframe
+
+\end{document}

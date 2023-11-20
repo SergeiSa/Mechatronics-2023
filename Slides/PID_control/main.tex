@@ -18,12 +18,15 @@
 
 \begin{frame}{Content}
 \begin{itemize}
-\item Steady State
-%\item Static State
-%\item Power
-%\item Efficiency
-%\item Static power
-%\item Reducer and power
+\item PID Control
+\item DC motor model
+\item PD Control of a DC motor velocity
+\item PD Control with reference signal
+\item PID Control of a DC motor velocity
+\item DC motor model with additive disturbance
+\item PID Control of a DC motor velocity
+\item PID Control, Laplace
+\item PID Control - position
 \end{itemize}
 \end{frame}
 
@@ -286,7 +289,7 @@
 	% \framesubtitle{O}
 	\begin{flushleft}
 		
-	If we want to control orientation of motor shaft, we have to re-write the dynamics in terms of $\varphi$:
+	If we want to control orientation of motor shaft, we have to re-write the dynamics in terms of $\varphi$. Since $\varphi(s) = \frac{1}{s} \omega(s)$, and $\omega(s) = \frac{b}{s^2 + a s+ c} u(s)$, we get:
 	%
 	\begin{equation}
 		\varphi(s) = \frac{b}{s^3 + a s^2 + cs} u(s)
@@ -296,10 +299,6 @@
 	%
 	\begin{equation}
 		u(s) =  (K_d s + K_p + \frac{K_i}{s}) (\varphi_r(s) - \varphi(s))
-	\end{equation}
-	%
-	\begin{equation}
-		\varphi(s) = \frac{1}{s^3 + a s^2 + cs} u(s)
 	\end{equation}
 
 	The closed-loop transfer function will be:

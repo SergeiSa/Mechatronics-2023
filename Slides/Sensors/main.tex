@@ -1,0 +1,240 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+\title{Optical sensors}
+\subtitle{Mechatronics, Lecture 9}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Content}
+\begin{itemize}
+	\item Measuring rotation
+	\item Optical encoder
+	\item Direction of rotation
+	\item Relative vs absolute encoders
+	\item Binary vs gray code
+	\item Placement of optical sensors
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Measuring rotation}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Rotation can be measured in many possible ways. Among them:
+		
+		\begin{itemize}
+			\item measuring 1D rotation with optical encoder;
+			\item measuring 1D rotation with hall effect encoder;
+			\item measuring 3D orientation with IMU.
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Optical encoder}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Optical encoders are characterized by the use of sources of light passing through disk with openings spaced at regular intervals:
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\linewidth]{encoder1}
+			\caption{Optical encoder}
+			\label{fig:encoder1}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Optical encoder - working principle}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Disk of the optical encoder is attached to the motor shaft, which rotation is measured. 
+		
+		\bigskip
+		
+		While the shaft and the disk are rotating, the light from the light source is being periodically blocked. The photo sensor is producing voltage as a function of the strength of the light that reaches the sensor. This results in a square waveform.
+		
+		\bigskip
+		
+		Counting how many times the voltage goes from high to low per unit of time, we can estimate angular velocity of the shaft.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Direction of rotation}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Direction of rotation is estimated using \emph{quadrature} encoder. It is achieved by placing two sensors with an offset (in terms of phase) allowing to compare their reading. When sensor A detects a change from high to low ahead of the sensor B - it encodes one direction of rotation,.e.g. clockwise. When sensor B is reading the change ahead of the sensor A - it encodes the opposite direction of rotation,.e.g. counter-clockwise:
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{Quadrature_Diagram.svg}
+%			\caption{}
+			\label{fig:quadraturediagram}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Orientation vs velocity}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		As mentioned before, we can estimate velocity as the number of voltage changes per unit of time. 
+		
+		\bigskip
+		
+		To estimate the angle of rotation we can multiply velocity by the time - or more directly, by counting number of voltage changes, taking into account direction of rotation. However, in case the direction of rotation changes often and fast, it is possible to accrue estimation error.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Incremental vs absolute encoders}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Incremental (relative) encoders are defined by inability to detect initial orientation of the shaft. Instead, they are only able to measure change on the orientation relative to the initial position of the shaft. The encoders we have looked at so far are incremental.
+		
+		\bigskip
+		
+		Absolute encoders are are able to measure initial orientation of the shaft. In optical encoders, it is done by placing multiple light sensors and encoding each possible orientation with a certain code.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Absolute encoder}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{Absolute-encoder}
+%			\caption{}
+			\label{fig:absolute-encoder}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Binary vs gray code, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		By its nature, the use of sensor implies that the signal will produce logical output of 0 or 1. This implies that encoding the orientation will be "binary-like".  
+		
+		\bigskip
+		
+		There are two popular types of encoding - binary code and gray code. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Binary vs gray code, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		\begin{table}[]
+			\begin{tabular}{lll}
+				\textbf{Decimal} & \textbf{Binary} & \textbf{Gray} \\
+				0       & 0000   & 0000 \\
+				1       & 0001   & 0001 \\
+				2       & 0010   & 0011 \\
+				3       & 0011   & 0010 \\
+				4       & 0100   & 0110 \\
+				5       & 0101   & 0111 \\
+				6       & 0110   & 0101 \\
+				7       & 0111   & 0100 \\
+				8       & 1000   & 1100 \\
+				9       & 1001   & 1101 \\
+				10      & 1010   & 1111 \\
+				11      & 1011   & 1110 \\
+				12      & 1100   & 1010 \\
+				13      & 1101   & 1011 \\
+				14      & 1110   & 1001 \\
+				15      & 1111   & 1000
+			\end{tabular}
+		\end{table}
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Binary vs gray code, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		We can notice that binary code changes multiple digits during a single increment. While gray code changes a single digits per increment.
+		
+		\bigskip
+		
+		The disadvantage changing multiple digits is the ambiguity during the transition. If even 2 digits simultaneously change during the transition, it means that there are at least 4 possible readings, only two of which are neighboring the current sensor position.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Placement of optical sensors}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Optical sensors can measure orientation of any shaft - including internal motor shaft and output gear box shaft. One of the ways to place such sensors is - place incremental encoder on the internal motor shaft, and absolute encoder on the output gear box shaft.
+		
+		\bigskip
+		
+		Internal motor shaft is rotating at higher angular velocity, providing more readings for the incremental encoder. This is especially useful in estimating angular velocity of the motor. However, backlash can make measurement of orientation with such an encoder dubious. Note that for velocity measurement absolute encoder does not hold an advantage over incremental one, and the latter is simpler in both design and signal processing.
+		
+		\bigskip
+		
+		Placing absolute encoder at the external shaft allows precise measurement of position, negating backlash. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+\myqrframe
+
+\end{document}
