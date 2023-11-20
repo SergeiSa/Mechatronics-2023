@@ -23,6 +23,7 @@ This repository contains regularly updated course materials. You can use lecture
 * Lecture 4 (part 1) - https://youtu.be/s_4yU-LvRCE
 * Lecture 4 (part 2) - https://youtu.be/_G6rb-1mylA
 * Lecture 5 - https://youtu.be/Fca-hdgpVXg
+* Lecture 6 - https://youtu.be/_3JpLo8uixY
 
 
 # For contributors
