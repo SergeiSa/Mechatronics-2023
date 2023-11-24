@@ -24,6 +24,7 @@ This repository contains regularly updated course materials. You can use lecture
 * Lecture 4 (part 2) - https://youtu.be/_G6rb-1mylA
 * Lecture 5 - https://youtu.be/Fca-hdgpVXg
 * Lecture 6 - https://youtu.be/_3JpLo8uixY
+* Lecture 7 - https://youtu.be/6-ST9roU8aA
 
 
 # For contributors
