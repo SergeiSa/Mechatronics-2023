@@ -12,7 +12,11 @@ This repository contains regularly updated course materials. You can use lecture
 * Lecture 6 - [Second-order systems](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Second_order_systems)
 * Lecture 7 - [PID control](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/PID_control)
 * Lecture 8 - [Gearbox](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Gearbox)
-
+* Lecture 9 - [Optical Sensors](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Sensors)
+* Lecture 10 - [Lag, Frequency](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/LagFrequency)
+* Lecture 11 - [Series Elastic Actuator](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Series_Elastic_Actuator)
+* Lecture 12 - [New Actuators Types](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/New_Actuators_Types)
+* Lecture 13 - [Motor Types](https://github.com/SergeiSa/Mechatronics-2023/tree/main/Slides/Motor_Types)
 
 
 # Lecture videos:
