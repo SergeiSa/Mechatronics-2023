@@ -58,7 +58,8 @@ jobs:
       - name: Compile LaTeX document PID_control
         uses: xu-cheng/latex-action@master
         with:
-          root_file: Slides/PID_control/
+          root_file: main.tex
+          working_directory: Slides/PID_control/
 
       - name: Compile LaTeX document Gearbox
         uses: xu-cheng/latex-action@master
