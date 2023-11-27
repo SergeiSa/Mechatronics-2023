@@ -58,13 +58,43 @@ jobs:
       - name: Compile LaTeX document PID_control
         uses: xu-cheng/latex-action@master
         with:
-          root_file: main.
+          root_file: Slides/PID_control/
 
       - name: Compile LaTeX document Gearbox
         uses: xu-cheng/latex-action@master
         with:
           root_file: main.tex
           working_directory: Slides/Gearbox/
+
+      - name: Compile LaTeX document Sensors
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/Sensors/
+
+      - name: Compile LaTeX document LagFrequency
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/LagFrequency/
+
+      - name: Compile LaTeX document Series_Elastic_Actuator
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/Series_Elastic_Actuator/
+
+      - name: Compile LaTeX document New_Actuators_Types
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/New_Actuators_Types/
+
+      - name: Compile LaTeX document Motor_Types
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/Motor_Types/
 
 
 
@@ -118,6 +148,35 @@ jobs:
           name: Gearbox.pdf
           path: Slides/Gearbox/main.pdf
 
+      - name: Save Sensors artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: Sensors.pdf
+          path: Slides/Sensors/main.pdf
+
+      - name: Save LagFrequency artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: LagFrequency.pdf
+          path: Slides/LagFrequency/main.pdf
+
+      - name: Save Series_Elastic_Actuator artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: Series_Elastic_Actuator.pdf
+          path: Slides/Series_Elastic_Actuator/main.pdf
+
+      - name: Save New_Actuators_Types artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: New_Actuators_Types.pdf
+          path: Slides/New_Actuators_Types/main.pdf
+
+      - name: Save Motor_Types artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: Motor_Types.pdf
+          path: Slides/Motor_Types/main.pdf
 
 
 
@@ -136,6 +195,11 @@ jobs:
           git add Slides/Second_order_systems/main.pdf
           git add Slides/PID_control/main.pdf
           git add Slides/Gearbox/main.pdf
+          git add Slides/Sensors/main.pdf
+          git add Slides/LagFrequency/main.pdf
+          git add Slides/Series_Elastic_Actuator/main.pdf
+          git add Slides/New_Actuators_Types/main.pdf
+          git add Slides/Motor_Types/main.pdf
 
           git commit -m "Update compiled PDFs"
           git push
