@@ -34,6 +34,7 @@ This repository contains regularly updated course materials. You can use lecture
 * Lecture 10 - https://youtu.be/DdMh0KzKYvc
 * Lecture 11 - https://youtu.be/x_pgVwyZcdw
 * Lecture 12 - https://youtu.be/mqlQseuJxAE
+* Lecture 13 - https://youtu.be/0OB2-PJ7sNk
 
 
 # For contributors
